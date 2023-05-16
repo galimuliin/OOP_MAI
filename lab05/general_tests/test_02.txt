@@ -1,0 +1,7 @@
+sjehfkj kjefh w
+insert 0 0 0 0 0
+insert 0 kehfkewjfh 0 0 0 0
+insert 0 kehfkewjfh 0 0 1 1
+insert 1 0 0 1 1
+erase 0
+square kefjh
