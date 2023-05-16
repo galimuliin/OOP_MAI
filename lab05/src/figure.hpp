@@ -4,42 +4,55 @@
 #include <iostream>
 
 const double PI = 3.141592653589793;
-// Векторное сложение
+
+// СЃР»РѕР¶РµРЅРёРµ РґРІСѓС… РІРµРєС‚РѕСЂРѕРІ, Р·Р°РґР°РЅРЅС‹С… С‚РёРїРѕРј T
 template <class T>
 std::pair<T, T> operator + (const std::pair<T, T> a, const std::pair<T, T> b) {
 	return { a.first + b.first, a.second + b.second };
 }
-// Векторное вычитание
+
+// РІС‹С‡РµС‚Р°РЅРёРµ РґРІСѓС… С‚РѕС‡РµРє, Р·Р°РґР°РЅРЅС‹С… С‚РёРїРѕРј T
 template <class T>
 std::pair<T, T> operator - (const std::pair<T, T> a, const std::pair<T, T> b) {
 	return { a.first - b.first, a.second - b.second };
 }
-// Скалярное умножение векторов
+
+// СЃРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ С‚РѕС‡РµРє РІ R^2, Р·Р°РґР°РЅРЅРѕРµ С‚РёРїРѕРј T
 template <class T>
 T operator * (const std::pair<T, T> a, const std::pair<T, T> b) {
 	return a.first * b.first + a.second * b.second;
 }
-// Умножение на скаляр
+// СѓРјРЅРѕР¶РµРЅРёРµ С‚РѕС‡РєРё РЅР° РєРѕРЅСЃС‚Р°РЅС‚Сѓ РІ С‚РёРїРµ T
 template <class T>
 std::pair<T, T> operator * (const T a, const std::pair<T, T> b) {
 	return { a * b.first, a * b.second };
 }
 
-// Вывод координат точки
+// РІРІРѕРґ С‚РѕС‡РєРё Р·Р°РґР°РЅРЅРѕР№ С‚РёРїРѕРј T
 template <class T>
 std::ostream& operator<< (std::ostream& out, const std::pair<T, T>& p) {
 	out << '(' << p.first << " , " << p.second << ')';
 	return out;
 };
 
-// Ввод координат
+// РІС‹РІРѕРґ С‚РѕС‡РєРё Р·Р°РґР°РЅРЅРѕР№ С‚РёРїРѕРј T
 template <class T>
 std::istream& operator>> (std::istream& in, std::pair<T, T>& p) {
 	in >> p.first >> p.second;
 	return in;
 }
 
-// Поворот вектора pair на угол angle
+// СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ РґРІСѓРјСЏ С‚РѕС‡РєР°РјРё Р·Р°РґР°РЅРЅС‹РјРё РїР°СЂРѕР№ РІРµСЂС€РёРЅ(РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РёРїР° T)
+template <class T>
+T len(const std::pair<T, T> a, const std::pair<T, T> b) {
+	return std::sqrt(std::pow(a.first - b.first, 2) + std::pow(a.second - b.second, 2));
+}
+
+template <class T>
+T abs(const std::pair<T, T> a) {
+	return std::sqrt(std::pow(a.first, 2) + std::pow(a.second, 2));
+}
+
 template <class T>
 std::pair<T, T> rotate(std::pair<T, T> pair, const double angle) {
 	std::pair<T, T> rotated;
@@ -48,62 +61,55 @@ std::pair<T, T> rotate(std::pair<T, T> pair, const double angle) {
 	return rotated;
 }
 
-
 template<typename T>
-class Triangle {
+class Rhombus {
 public:
 	using Vertex = std::pair<T, T>;
 
-	Triangle();
-	Triangle(Vertex center, Vertex vertex);
+	Rhombus();
+	Rhombus(Vertex center, Vertex vertex, T second_diag_length);
 
-	// Возвращает площадь треугольника
 	double Square() const;
 	
-	friend std::ostream& operator<< (std::ostream& out, const Triangle<T>& t) {
-		const double ANGLE = 2 * PI / Triangle<T>::vertex_count; // угол между двумя соседними вершинами и центром
+	friend std::ostream& operator<< (std::ostream& out, const Rhombus<T>& t) {
 
-		out << "Координаты треугольника: ";
-		out << t.vertex;		// Выводим первую вершину
-		auto vec = t.vertex - t.center;
-		for (int i = 2; i <= Triangle<T>::vertex_count; ++i)
-		{
-			vec = rotate(vec, ANGLE); // Получаем координаты следующий вершины
-			out << ' ' << t.center + vec;
-		}
-		out << "\t площадь: " << t.Square() << '\n';
+		out << "point coordinates: ";
+		out << t.vertex << "; "
+			<< t.vertex + (T)(2) * (t.center - t.vertex) << "; "
+			<< t.center +  t.second_diag_length / (T)(2) * ((T)(1) / abs(t.center - t.vertex)) * rotate(t.center - t.vertex,PI/2) << "; "
+			<< t.center -  t.second_diag_length / (T)(2) * ((T)(1) / abs(t.center - t.vertex)) * rotate(t.center - t.vertex,PI/2);
+		out << "\t Square: " << t.Square() << '\n';
 		return out;
 	}
 
-	friend std::istream& operator>> (std::istream& in, Triangle<T>& t) {
-		in >> t.center >> t.vertex;
+	friend std::istream& operator>> (std::istream& in, Rhombus<T>& t) {
+		in >> t.center >> t.vertex >> t.second_diag_length;
 		if (t.center == t.vertex)
 			in.setstate(std::ios_base::failbit);
 		return in;
 	}
 
 private:
-	static const int vertex_count = 3; // Кол-во вершин треугольника
+	static const int vertex_count = 3;
 
-	Vertex center; // Центр описанной окружности
-	Vertex vertex; // Одна из вершин треугольника
+	Vertex center;
+	Vertex vertex;
+	T second_diag_length;
 };
 
 template<typename T>
-Triangle<T>::Triangle()
+Rhombus<T>::Rhombus()
 {}
 
 template<typename T>
-Triangle<T>::Triangle(Vertex center, Vertex vertex) 
-	: center{ center }, vertex{ vertex } 
+Rhombus<T>::Rhombus(Vertex center, Vertex vertex, T second_diag_length) 
+	: center{ center }, vertex{ vertex }, second_diag_length{second_diag_length}
 {
 	if (center == vertex)
 		throw std::invalid_argument("center cannot be eq to the vertex");
 }
 
 template<typename T>
-double Triangle<T>::Square() const {
-	auto vecRadius = vertex - center; // Вектор-радиус описанной окружности
-	double sqRadius = vecRadius * vecRadius;	   // Квадрат радуиса описанной окружности
-	return vertex_count / 2. * sqRadius * std::sin(2 * PI / vertex_count);
+double Rhombus<T>::Square() const {
+	return len(vertex, center) * second_diag_length;
 }

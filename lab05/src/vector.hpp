@@ -51,7 +51,6 @@ public:
 		return this->buf_.get()[i];
 	}
 
-	// Итераторы
 	class iterator
 	{
 		friend class Vector;
@@ -110,7 +109,6 @@ public:
 		it.ptr = buf_.get() + size_;
 		return it;
 	}
-	// Возвращает итератор, который указыавет на элемент под номером index
 	iterator iterator_by_index(int index) {
 		if (index < 0 || index > size_)
 			throw std::out_of_range("bad index");
@@ -125,6 +123,9 @@ public:
 			grow();
 		buf_.get()[size_] = val;
 		++size_;
+	}
+	void pop_back() {
+		--size_;
 	}
 	void push_back(T&& val) {
 		if (size_ >= cap_)

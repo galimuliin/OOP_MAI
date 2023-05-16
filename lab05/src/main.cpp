@@ -1,20 +1,4 @@
-/*
-  Лабораторная работа: 5
-  Вариант: 25
-  Группа: М8О-206Б-19
-  Автор: Суханов Егор Алексеевич
 
-  Разработать шаблоны классов согласно варианту задания. 
-  Параметром шаблона должен являться скалярный тип данных задающий тип данных для оси координат. 
-  Классы должны иметь публичные поля. Фигуры являются фигурами вращения, т.е. равносторонними (кроме трапеции и прямоугольника).
-  Для хранения координат фигур необходимо использовать шаблон  std::pair.
-
-  Фигура:
-	Треугольник
-  Структура данных:
-	Динамический массив
-
-*/
 #include <iostream>
 #include <algorithm>
 #include "vector.hpp"
@@ -30,13 +14,14 @@ void clear()
 void help()
 {
 	std::cout <<
-		"команды:\n"
-		"    help        -- выводит этот текст\n"
-		"    exit        -- завершает работу программы\n"
-		"    print       -- выводит вектор фигур (выполняет их методы)\n"
-		"    square <par>  -- выводит кол-во элементов, площадь которых меньше или равна заданному параметра\n"
-		"    erase <id> -- удаляет элемент с индексом id\n"
-		"    insert <id> <center> <vertex> -- вставляет треугольник на позицию с номером id\n"
+		"СЃРїРёСЃРѕРє РєРѕРјР°РЅРґ:\n"
+		"    help        -- РїРѕРјРѕС‰СЊ РІ СѓРїСЂР°РІР»РµРЅРёРё\n"
+		"    exit        -- Р’С‹Р№С‚Рё РёР· РїСЂРѕРіСЂР°РјРјС‹\n"
+		"    print       -- Р’С‹РІРµСЃС‚Рё СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё\n"
+		"    square <par>  -- Р’С‹РІРµСЃС‚Рё РєРѕР»-РІРѕ С„РёРіСѓСЂ СЃ РїР»РѕС‰Р°РґСЊСЋ РјРµРЅСЊС€Рµ Р·Р°РґР°РЅРЅРѕР№\n"
+		"    erase <id> -- СѓРґР°Р»РёС‚СЊ СЌР»РµРјРµРЅС‚ РїРѕ id\n"
+		"    push <<center> <vertex(left,bottom)> <len of the second diag> -- РґРѕР±Р°РІСЊС‚Рµ РЅРѕРІС‹Р№ СЂРѕРјР± РІ РєРѕР»Р»РµРєС†РёСЋ СЃ Р·Р°РґР°РЅРЅС‹Рј id\n"
+		"    pop  -- СѓРґР°Р»РёС‚СЊ РёР· СЃС‚РµРєР° РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚"
 		<< std::endl;
 }
 
@@ -51,7 +36,7 @@ template<class T>
 void square(Vector<T>& figures) {
 	double par;
 	if (!(std::cin >> par)) {
-		std::cout << "Введено некоректное число.\n";
+		std::cout << "РїР»РѕС…РѕРµ Р·РЅР°С‡РµРЅРёРµ РїР»РѕС‰Р°РґРё РґР»СЏ СѓСЃР»РѕРІРёСЏ.\n";
 		clear();
 		return;
 	}
@@ -59,14 +44,14 @@ void square(Vector<T>& figures) {
 	long long count = std::count_if(figures.begin(), figures.end(), [par](T& val){
 		return val.Square() <= par;
 	});
-	std::cout << "Кол-во фигур, площадь которых меньше " << par << ", равно: "  << count << '\n';
+	std::cout << "РќР°Р№РґРµРЅРѕ С„РёРіСѓСЂ, СЃ РїРѕР»С‰Р°РґСЊСЋ РјРµРЅСЊС€Рµ " << par << ", РІ РєРѕР»-РІРµ: "  << count << '\n';
 }
 
 template<class T>
 void erase(Vector<T>& vec) {
 	int del_element_idx;
 	if (!(std::cin >> del_element_idx) || del_element_idx < 0 || del_element_idx >= vec.size()) {
-		std::cout << "Введено некоректное число.\n";
+		std::cout << "РїР»РѕС…РѕРµ Р·РЅР°С‡РµРЅРёРµ РёРЅРґРµРєСЃР° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.\n";
 		clear();
 		return;
 	}
@@ -78,7 +63,7 @@ template<class T>
 void insert(Vector<T>& vec) {
 	int new_element_index;
 	if (!(std::cin >> new_element_index) || new_element_index < 0 || new_element_index > vec.size()) {
-		std::cout << "Введено некоректное число.\n";
+		std::cout << "РЅРµРІР°Р»РёРґРЅС‹Р№ РЅРѕРІС‹Р№ РёРЅРґРµРєСЃ.\n";
 		clear();
 		return;
 	}
@@ -86,7 +71,7 @@ void insert(Vector<T>& vec) {
 	T new_el;
 	if (!(std::cin >> new_el))
 	{
-		std::cout << "Введена некоректные координаты.\n";
+		std::cout << "РїР»РѕС…РѕР№ С„РѕСЂРјР°С‚ РІРІРѕРґР° С„РёРіСѓСЂС‹.\n";
 		clear();
 		return;
 	}
@@ -94,10 +79,28 @@ void insert(Vector<T>& vec) {
 	vec.insert(vec.iterator_by_index(new_element_index), new_el);
 }
 
+template<class T>
+void push_back(Vector<T>& vec) {
+	T new_el;
+	if (!(std::cin >> new_el))
+	{
+		std::cout << "РїР»РѕС…РѕР№ С„РѕСЂРјР°С‚ РІРІРѕРґР° С„РёРіСѓСЂС‹.\n";
+		clear();
+		return;
+	}
+
+	vec.push_back(new_el);
+}
+
+template<class T>
+void pop_back(Vector<T>& vec) {
+	vec.pop_back();
+}
+
 int main()
 {
 	setlocale(LC_ALL, "russian");
-	Vector<Triangle<float> > figures;
+	Vector<Rhombus<float> > figures;
 
 	std::string cmd;
 	std::cout << '>';
@@ -115,9 +118,13 @@ int main()
 			erase(figures);
 		else if (cmd == "insert")
 			insert(figures);
+		else if (cmd == "push")
+			push_back(figures);
+		else if (cmd == "pop")
+			pop_back(figures);
 		else
 		{
-			std::cout << "Введена неизвестная команда. Чтобы вывести справку, введите \"help\"" << std::endl;
+			std::cout << "РџСЂРѕРіСЂР°РјРјР° РїРѕР·РІРѕР»СЏРµС‚ СЂР°Р±РѕС‚Р°С‚СЊ СЃ РєРѕР»Р»РµРєС†РёРµР№ СЌРєР·РµРјРїР»СЏСЂРѕРІ С„РёРіСѓСЂ(СЂРѕРјР±РѕРІ). Р”Р»СЏ Р±РѕР»СЊС€РµР№ РёРЅС„РѕСЂРјР°С†РёРё РЅР°Р¶РјРёС‚Рµ \"help\"" << std::endl;
 			clear();
 		}
 
