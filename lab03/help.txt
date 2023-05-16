@@ -1,0 +1,9 @@
+sudo apt install cmake
+cmake .
+make
+./lab1 < test_01.txt
+./lab1 < test_01.txt -> test_01.res
+./lab1 < test_02.txt
+./lab1 < test_02.txt -> test_02.res
+./lab1 < test_03.txt
+./lab1 < test_03.txt -> test_03.res
