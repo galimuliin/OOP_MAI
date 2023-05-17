@@ -1,13 +1,12 @@
-insert 0 0 0 1 1
-insert 1 0 0 2 2
-insert 0 0 0 3 3
-insert 1 0 0 3 3
+push 0 0 0 1 1
+push 1 0 0 2 2
+push 0 0 0 3 3
+push 1 0 0 3 3
 print
 square 2
-square 20
-square 50
+square 5
+square 10
 erase 3
+erase 2
 erase 1
-erase 0
-erase 0
 print

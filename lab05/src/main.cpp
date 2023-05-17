@@ -14,14 +14,14 @@ void clear()
 void help()
 {
 	std::cout <<
-		"список команд:\n"
-		"    help        -- помощь в управлении\n"
-		"    exit        -- Выйти из программы\n"
-		"    print       -- Вывести элемент коллекции\n"
-		"    square <par>  -- Вывести кол-во фигур с площадью меньше заданной\n"
-		"    erase <id> -- удалить элемент по id\n"
-		"    push <<center> <vertex(left,bottom)> <len of the second diag> -- добавьте новый ромб в коллекцию с заданным id\n"
-		"    pop  -- удалить из стека последний элемент"
+		"comands list:\n"
+		"    help        -- help in control\n"
+		"    exit        -- exit from program\n"
+		"    print       -- show element of collection\n"
+		"    square <par>  -- show numbers of figures wich square is less than the value of par\n"
+		"    erase <id> -- delete element with current id\n"
+		"    push <<center> <vertex(left,bottom)> <len of the second diag> -- add to collection new rhombus with current id\n"
+		"    pop  -- delete last element from stack"
 		<< std::endl;
 }
 
@@ -36,7 +36,7 @@ template<class T>
 void square(Vector<T>& figures) {
 	double par;
 	if (!(std::cin >> par)) {
-		std::cout << "плохое значение площади для условия.\n";
+		std::cout << "bad squares value for the condition.\n";
 		clear();
 		return;
 	}
@@ -44,14 +44,14 @@ void square(Vector<T>& figures) {
 	long long count = std::count_if(figures.begin(), figures.end(), [par](T& val){
 		return val.Square() <= par;
 	});
-	std::cout << "Найдено фигур, с полщадью меньше " << par << ", в кол-ве: "  << count << '\n';
+	std::cout << "Found figures with an square less than " << par << ", in the amount of:"  << count << '\n';
 }
 
 template<class T>
 void erase(Vector<T>& vec) {
 	int del_element_idx;
 	if (!(std::cin >> del_element_idx) || del_element_idx < 0 || del_element_idx >= vec.size()) {
-		std::cout << "плохое значение индекса для удаления.\n";
+		std::cout << "bad index to delete value.\n";
 		clear();
 		return;
 	}
@@ -63,7 +63,7 @@ template<class T>
 void insert(Vector<T>& vec) {
 	int new_element_index;
 	if (!(std::cin >> new_element_index) || new_element_index < 0 || new_element_index > vec.size()) {
-		std::cout << "невалидный новый индекс.\n";
+		std::cout << "not valid new index.\n";
 		clear();
 		return;
 	}
@@ -71,7 +71,7 @@ void insert(Vector<T>& vec) {
 	T new_el;
 	if (!(std::cin >> new_el))
 	{
-		std::cout << "плохой формат ввода фигуры.\n";
+		std::cout << "bad input format of figure.\n";
 		clear();
 		return;
 	}
@@ -84,7 +84,7 @@ void push_back(Vector<T>& vec) {
 	T new_el;
 	if (!(std::cin >> new_el))
 	{
-		std::cout << "плохой формат ввода фигуры.\n";
+		std::cout << "bad input format of figure.\n";
 		clear();
 		return;
 	}
@@ -124,7 +124,7 @@ int main()
 			pop_back(figures);
 		else
 		{
-			std::cout << "Программа позволяет работать с коллекцией экземпляров фигур(ромбов). Для большей информации нажмите \"help\"" << std::endl;
+			std::cout << "Program let you work with instances collection of figures(rhombus). For more information tap \"help\"" << std::endl;
 			clear();
 		}
 
